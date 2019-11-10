@@ -75,9 +75,7 @@ impl From<&str> for Hand {
                     .len() == 1;
                 let is_straight: bool = cards
                     .windows(2)
-                    .fold(true, |acc, c| {
-                        acc && (c[0].rank + 1 == c[1].rank)
-                    });
+                    .all(|c| c[0].rank + 1 == c[1].rank);
                 let is_low_straight: bool = cards
                     .iter()
                     .map(|c| c.rank)
