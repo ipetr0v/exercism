@@ -1,0 +1,35 @@
+pub struct Duration(u64);
+
+impl From<u64> for Duration {
+    fn from(s: u64) -> Self {
+        Duration(s)
+    }
+}
+
+pub trait Planet {
+    const YEAR_IN_SECONDS: f64 = 31_557_600.0;
+    const PERIOD_IN_EARTH_YEARS: f64;
+
+    fn years_during(d: &Duration) -> f64 {
+        (d.0 as f64 / Self::YEAR_IN_SECONDS) / Self::PERIOD_IN_EARTH_YEARS
+    }
+}
+
+#[macro_export]
+macro_rules! planet {
+    ($name:ident, $period:expr) => {
+        pub struct $name;
+        impl Planet for $name {
+            const PERIOD_IN_EARTH_YEARS: f64 = $period;
+        }
+    };
+}
+
+planet!(Mercury, 0.2408467);
+planet!(Venus, 0.61519726);
+planet!(Earth, 1.0);
+planet!(Mars, 1.8808158);
+planet!(Jupiter, 11.862615);
+planet!(Saturn, 29.447498);
+planet!(Uranus, 84.016846);
+planet!(Neptune, 164.79132);
