@@ -1,16 +1,25 @@
+const SOUND_MAP: [(u32, &str); 3] = [
+    (3, "Pling"),
+    (5, "Plang"),
+    (7, "Plong")
+];
+
 pub fn raindrops(n: u32) -> String {
-    let mut out = String::new();
-    if n % 3 == 0 {
-        out.push_str("Pling");
-    }
-    if n % 5 == 0 {
-        out.push_str("Plang");
-    }
-    if n % 7 == 0 {
-        out.push_str("Plong");
-    }
+    let out = SOUND_MAP
+        .iter()
+        .filter_map(|(d, s)| {
+            if n % d == 0 {
+                Some(s.chars())
+            } else {
+                None
+            }
+        })
+        .flatten()
+        .collect::<String>();
+
     if out.is_empty() {
-        out = n.to_string();
+        n.to_string()
+    } else {
+        out
     }
-    return out;
 }
